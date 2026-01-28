@@ -159,4 +159,11 @@ return {
     })
     end,
   },
+  {
+    'akinsho/git-conflict.nvim',
+    version = "*",
+    config = function()
+      require("config.git-conflict")
+    end,
+  },
 }
