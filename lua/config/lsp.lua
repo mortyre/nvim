@@ -13,16 +13,23 @@ if ok_cmp then
   capabilities = cmp_lsp.default_capabilities(capabilities)
 end
 
--- новый API: vim.lsp.config
-local pyright = vim.lsp.config["pyright"] or vim.lsp._config("pyright", {})
-
-vim.lsp.start_client(vim.tbl_deep_extend("force", pyright, {
+-- Новый API (Nvim 0.11+). Базовый конфиг pyright приходит из nvim-lspconfig
+-- (его lsp/pyright.lua), здесь мы только дополняем его своими capabilities.
+-- vim.lsp.enable сам навешивает FileType-автокоманду, поэтому сервер
+-- поднимается на python-буфере, а не при каждом старте nvim, как было
+-- с прямым вызовом vim.lsp.start_client() (убран в Nvim 0.13).
+vim.lsp.config("pyright", {
   capabilities = capabilities,
-  name = "pyright",
-}))
+})
+vim.lsp.enable("pyright")
 
--- ключевые биндинги
-vim.keymap.set("n", "gd", vim.lsp.buf.definition)
-vim.keymap.set("n", "gr", vim.lsp.buf.references)
-vim.keymap.set("n", "K", vim.lsp.buf.hover)
-vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename)
+-- ключевые биндинги — только в тех буферах, куда прикрепился LSP
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(ev)
+    local opts = { buffer = ev.buf }
+    vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+    vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+    vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+    vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+  end,
+})
