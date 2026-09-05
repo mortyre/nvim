@@ -40,6 +40,10 @@ return {
     "nvim-telescope/telescope.nvim",
     tag = "0.1.8",
     dependencies = { "nvim-lua/plenary.nvim" },
+    cmd = "Telescope",
+    config = function()
+      require("telescope").setup({})
+    end,
   },
 
   -- DAP + Python
@@ -75,12 +79,8 @@ return {
     "AckslD/swenv.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
-      local swenv = require("swenv")
-      swenv.setup()
-
-      vim.keymap.set("n", "<leader>ve", function()
-        swenv.pick_venv()
-      end, { desc = "Pick Python venv" })
+      require("swenv").setup()
+      -- биндинги <leader>ve / <leader>vi — в lua/config/keymaps.lua
     end,
   },
 
@@ -133,32 +133,15 @@ return {
     end,
   },
 
-  -- which-key (подсказки по keymaps)
+  -- which-key (панель подсказок по горячим клавишам)
   {
-  "folke/which-key.nvim",
-  event = "VeryLazy",
-  config = function()
-    local wk = require("which-key")
-
-    wk.setup({
-      preset = "helix",
-      plugins = {
-        spelling = {
-          enabled = true,
-          suggestions = 20,
-        },
-      },
-      win = {
-        border = "rounded",
-        -- position = "right",
-      },
-      layout = {
-        spacing = 4,
-        align = "left",
-      },
-    })
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("config.whichkey")
     end,
   },
+
   {
     'akinsho/git-conflict.nvim',
     version = "*",

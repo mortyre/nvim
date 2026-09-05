@@ -1,5 +1,4 @@
 -- ~/.config/nvim/lua/config/dap.lua
-local dap = require("dap")
 local dap_python = require("dap-python")
 -- local mason_registry = require("mason-registry")
 
@@ -17,8 +16,4 @@ require("mason-nvim-dap").setup({
 dap_python.setup()
 
 
-vim.keymap.set("n", "<F5>", dap.continue)
-vim.keymap.set("n", "<F10>", dap.step_over)
-vim.keymap.set("n", "<F11>", dap.step_into)
-vim.keymap.set("n", "<F12>", dap.step_out)
-vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint, { desc = "Toggle breakpoint" })
+-- Биндинги <leader>d* и F5/F10/F11/F12 — в lua/config/keymaps.lua

@@ -225,15 +225,8 @@ require("nvim-tree").setup({
   on_attach = my_on_attach,
 })
 
--- Глобальные keymaps
-vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>", { desc = "Toggle file explorer" })
-vim.keymap.set("n", "<leader>fe", ":NvimTreeToggle<CR>", { desc = "Toggle explorer" })
-vim.keymap.set("n", "<leader>ff", ":NvimTreeFindFile<CR>", { desc = "Find file in explorer" })
-vim.keymap.set("n", "<leader>fc", ":NvimTreeCollapse<CR>", { desc = "Collapse explorer" })
-vim.keymap.set("n", "<leader>fr", ":NvimTreeRefresh<CR>", { desc = "Refresh explorer" })
-vim.keymap.set("n", "<leader>fh", function()
-  api.tree.toggle_help()
-end, { desc = "Show explorer help" })
+-- Глобальный <leader>e — в lua/config/keymaps.lua.
+-- Клавиши внутри дерева задаёт my_on_attach выше; полная справка по ним — g?
 
 -- ============================================================================
 -- ОПТИМИЗИРОВАННЫЕ АВТОКОМАНДЫ
